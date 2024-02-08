@@ -33,10 +33,8 @@ export class TarjetaCreditoComponent implements OnInit {
   }
 
   obtenerTarjetas(): void {
-    this._tarjetaService.getListTarjetas().subscribe((res:Responsetarjeta) => {
-      console.log(res);
-      console.log(res.data);
-      this.listTarjetas = res.data;
+    this._tarjetaService.getListTarjetas().subscribe((res:TarjetaCredito[]) => {
+      this.listTarjetas = res;
       console.log("listar tarjetas");
       console.log(this.listTarjetas);
     }, error => {

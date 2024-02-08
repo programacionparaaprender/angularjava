@@ -15,8 +15,8 @@ export class TarjetaService {
     
   }
 
-  getListTarjetas(): Observable<Responsetarjeta>{
-    return this.http.get<Responsetarjeta>(this.myApiUrl);
+  getListTarjetas(): Observable<TarjetaCredito[]>{
+    return this.http.get<TarjetaCredito[]>(this.myApiUrl);
   }
 
   deleteTarjeta(id: number): Observable<TarjetaCredito> {
