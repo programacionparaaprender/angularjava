@@ -1,5 +1,4 @@
 export class RegistroDto {
-    id?: number;
     username: string;
     email: string;
     password: string;

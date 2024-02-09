@@ -75,7 +75,8 @@ export class RegistrarUsuariosComponent implements OnInit {
             tokenValidityInDays: data.tokenValidityInDays
           };
           this.tokenService.setUser(usertoken);
-          this.menuService.setMenus();
+          this.tokenService.setToken(usertoken.token);
+          await this.menuService.setMenus();
           this.router.navigate(['/tarjeta']);
         }else{
           console.log('ocurrio un error');

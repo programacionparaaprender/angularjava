@@ -7,6 +7,7 @@ import { Usertoken } from 'src/app/models/usertoken';
 import { Responseusuario } from 'src/app/models/responseusuario';
 import { Responseusertoken } from 'src/app/models/responseusertoken';
 import { TioDto } from 'src/app/commons/dto/tioDto';
+import { RegistroDto } from '../commons/dto/registroDto';
 
 
 @Injectable({
@@ -17,15 +18,15 @@ export class TokenService {
   myApiUsuario = "http://localhost:8080/api/user/";
   KEYTOKEN = "KEYTOKEN";
   tokenURL = 'https://localhost:7107/token/';
-  tioURL = 'https://localhost:7107/api/tio/';
+  tioURL = 'http://localhost:8080/api/user/';
   apiv1URL = 'https://localhost:7107/api/v1';
   usuariologeado = false;
   constructor(private httpClient: HttpClient) { }
 
-  async registrar(tio: TioDto){
+  async registrar(tio: RegistroDto){
     try{
       var response;
-      response = await axios.post(this.tioURL, tio);
+      response = await axios.post(this.tioURL + 'registrar', tio);
       return response;
       
     }catch(e: unknown | any){
