@@ -40,14 +40,7 @@ export class RegistrarUsuariosComponent implements OnInit {
       //this.login = this.store.select('login');
       this.tio = new RegistroDto("", "", "");
       this.login = null;
-      if(localStorage.getItem('login')){
-        const json: string  | null = localStorage.getItem('login');
-        if(json != null){
-          const usertoken:Usertoken = JSON.parse(json);
-          this.login = usertoken;
-          this.router.navigate(['/login']);
-        }
-      }
+      
   }
 
   ngOnInit() {

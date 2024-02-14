@@ -42,7 +42,46 @@ export class TarjetaCreditoComponent implements OnInit {
     });
   }
 
-  agregarTarjeta(): void{
+  async agregarTarjeta(){
+    try{
+      //console.log(this.form)
+      var tarjeta: TarjetaCredito = {
+        id:0,
+        titular: this.form.get('titular')?.value, 
+        numeroTarjeta: String(this.form.get('numeroTarjeta')?.value), 
+        fechaExpiracion: this.form.get('fechaExpiracion')?.value, 
+        cvv: this.form.get('cvv')?.value
+      } 
+      console.log(tarjeta);
+      if(this.id == undefined || this.id == 0){
+        const response = await this._tarjetaService.saveAsyncTarjeta(tarjeta);
+        console.log("response");
+        console.log(JSON.stringify(response));
+        this.obtenerTarjetas();
+        //this.toastr.success('Hello world!', 'Tarjeta registrada!');
+        this.form.reset();
+      
+      }else{
+        //console.log("Actualizar tarjeta");
+        tarjeta.id = this.id;
+        this._tarjetaService.updateTarjeta(tarjeta, this.id).subscribe(data => {
+          //console.log(data);
+          this.obtenerTarjetas();
+          //this.toastr.success('Hello world!', 'Tarjeta actualizada!');
+          this.form.reset();
+          this.id = 0;
+          this.accion = "Agregar";
+        }, error => {
+          console.log(error);
+          //this.toastr.error('Tarjeta no fue actualizada con exito!', error);
+        }); 
+      }
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+  agregarTarjetaAntiguo(): void{
     //console.log(this.form)
     var tarjeta: TarjetaCredito = {
       id:0,
@@ -52,18 +91,14 @@ export class TarjetaCreditoComponent implements OnInit {
       cvv: this.form.get('cvv')?.value
     } 
     console.log(tarjeta);
-    console.log(this.id);
-    console.log(this.form.get('tarjetaId')?.value);
     if(this.id == undefined || this.id == 0){
-      //console.log('Guardar tarjeta');
-      //this.listTarjetas.push(tarjeta);
       this._tarjetaService.saveTarjeta(tarjeta).subscribe(data => {
       //console.log(data);
       this.obtenerTarjetas();
       //this.toastr.success('Hello world!', 'Tarjeta registrada!');
       this.form.reset();
     }, error => {
-      //console.log(error);
+      console.log(error);
       //this.toastr.error('Tarjeta no fue registrada con exito!', error);
     }); 
     }else{
@@ -77,7 +112,7 @@ export class TarjetaCreditoComponent implements OnInit {
         this.id = 0;
         this.accion = "Agregar";
       }, error => {
-        //console.log(error);
+        console.log(error);
         //this.toastr.error('Tarjeta no fue actualizada con exito!', error);
       }); 
     }
