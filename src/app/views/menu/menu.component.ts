@@ -21,7 +21,7 @@ import { ResponseMenu } from 'src/app/models/responsemenu';
 })
 
 
-export class MenuComponent implements OnInit {
+export class MenuComponent {
   //@ViewChild(LoginUsuariosComponent) child;
   //menus:ResponseMenu[] = [];
   menusAngular:ResponseMenu[] = [];
@@ -53,9 +53,11 @@ export class MenuComponent implements OnInit {
         }
       }
     }
+
+    this.menuService.listaSincrona();
   }
 
-  async ngOnInit() {
+  /* async ngOnInit() {
     const response = await this.menuService.lista(); 
     if(response){
       this.menusAngular = response.data;
@@ -64,10 +66,21 @@ export class MenuComponent implements OnInit {
       console.log('no esta autorizado');
     }
      
-  }
+  } */
+
+  
 
   get menus() {
+    //await this.ngOnInit();
     const menuString:string = this.menuService.getMenusArray();
+    console.log('menuString');
+    console.log(menuString);
+    if(menuString == undefined){
+      return;
+    }
+    const token = localStorage.getItem('token');
+    console.log('token: ' + token);
+
     let MenusArray:ResponseMenu[] = []
     if(menuString.length > 0){
       MenusArray = JSON.parse(menuString);
@@ -94,7 +107,8 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/login']);
     this.tokenService.setUser(usuario);
     this.tokenService.logout();
-    await this.ngOnInit();
+    //await this.ngOnInit();
+    this.menuService.listaSincrona();
     this.menuService.setMenusLimpiar();
   }
 

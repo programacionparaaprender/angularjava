@@ -17,6 +17,26 @@ export class MenuService {
 
   }
 
+  listaSincrona() {
+    const token = localStorage.getItem('token');
+    console.log('token: ' + token);
+    const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      });
+    const requestOptions = { headers: headers };
+    this.httpClient.get<ResponseMenu[]>(this.myApiUrl).subscribe(
+      (response: any) => {
+        if(response){
+          const menusAngular = response.data;
+          this.setMenusArray(menusAngular);
+        }else {
+          console.log('no esta autorizado');
+        }
+      }
+    );	
+  }
+
   async lista() {
     var response;
     try{

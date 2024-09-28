@@ -20,8 +20,11 @@ import { TodoUsuariosComponent } from './views/users/todo-usuarios/todo-usuarios
 import { SlideComponent } from './views/slide/slide.component';
 import { SidebarDirective } from './directivas/sidebar.directive';
 
+import { SidebarComponent } from './views/sidebar/sidebar.component';
+
 @NgModule({
   declarations: [
+    SidebarComponent,
     TarjetaCreditoComponent,
     AppComponent,
     MenuComponent,
